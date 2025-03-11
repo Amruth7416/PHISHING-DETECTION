@@ -139,3 +139,24 @@ body {
 .binary-stream:nth-child(even) {
   animation-duration: 7s;
 }
+
+select {
+  width: 95%;
+  padding: 10px;
+  border: 2px solid #39ff14;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #111;
+  color: #39ff14;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px #39ff14;
+  transition: 0.3s;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
