@@ -4,8 +4,6 @@ import os
 import re
 import tldextract
 from sklearn.ensemble import RandomForestClassifier 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
@@ -52,7 +50,24 @@ model_path = os.path.join(base_dir, "models", "website_model.pkl")
 joblib.dump(model, model_path)
 print(f"Model saved as {model_path}")
 
+SAFE_WEBSITES = {
+    "google.com", "www.google.com",
+    "facebook.com", "www.facebook.com",
+    "amazon.com", "www.amazon.com",
+    "youtube.com", "www.youtube.com",
+    "microsoft.com", "www.microsoft.com",
+    "github.com", "www.github.com",
+    "apple.com", "www.apple.com",
+    "openai.com", "www.openai.com"
+}
+
 def analyze_url(url):
+    extracted = tldextract.extract(url)
+    domain_with_suffix = f"{extracted.domain}.{extracted.suffix}"
+    
+    if domain_with_suffix in SAFE_WEBSITES:
+        return "benign"
+
     model = joblib.load(model_path)
     features = extract_features(url)
     features_df = pd.DataFrame([features]) 
